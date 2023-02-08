@@ -1,11 +1,22 @@
-export default function FetchWeatherItems({ main, temp, icon, description }) {
+export default function FetchWeatherItems({
+	main,
+	temp,
+	icon,
+	description,
+	city,
+}) {
 	return (
 		<>
 			<section className="container mx-auto flex flex-col items-center content-center justify-center">
-				<div className="text-black">{main}</div>
-				<div className="text-black">{temp}</div>
-                <img src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt={description} />
-                <p>{description}</p>
+				<p>{city}</p>
+				<div className="flex flex-row-reverse">
+					<p className="mt-8">{temp}</p>
+					<img
+						src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+						alt={description}
+					/>
+				</div>
+				<p>{description}</p>
 			</section>
 		</>
 	);
