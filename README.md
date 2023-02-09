@@ -25,4 +25,3 @@ to a child and then child to parent component. Also practiced useEffect as well.
 
 
 
-<!-- Gh repo create miguelcamilo/Weather-Wise-Web-App --source=. --public --push -->
