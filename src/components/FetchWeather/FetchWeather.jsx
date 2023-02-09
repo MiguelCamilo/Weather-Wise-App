@@ -1,5 +1,4 @@
 import Search from "../Input/Search";
-import Button from "../Button/Button";
 import Time from "../Time/Time";
 import FetchWeatherItems from "./FetchWeatherItems";
 import { useState, useEffect } from "react";
@@ -7,12 +6,18 @@ import { API } from "../../secrets";
 
 export default function FetchWeather() {
 	const [weather, setWeather] = useState();
-	const [message, setMessage] = useState();
+	const [message, setMessage] = useState(`☀️  ⛈️  ☔️  🌨️ 🌤️ ❄️`);
+	const [cityName, setCityName] = useState()
 
 	const API_KEY = API.api;
-	const CITY_NAME = "Miami";
-	//https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=
-	const url = `https://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=imperial`;
+
+	// this will get the data from
+	// from the Search component
+	const getData = (city) => {
+		setCityName(city)
+	};
+
+	const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=imperial`;
 	const image = (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -31,19 +36,22 @@ export default function FetchWeather() {
 	);
 
 	useEffect(() => {
-		setMessage(image);
-		fetch(url)
-			.then((res) => res.json())
-			.then(setWeather)
-			.catch((err) => console.error(err));
-	}, [weather]);
+		if (cityName) {
+			setMessage(image);
+			fetch(url)
+				.then((res) => res.json())
+				.then(setWeather)
+				.catch((err) => console.error(`Error: ${err}`));
+		}
+	}, [cityName]);
 
 	return (
 		<div className="bg-[#e3e9f0] min-h-screen flex flex-col items-center justify-center">
-			<div className="bg-white flex flex-col justify-center items-center md:w-[40rem] md:h-[40rem] w-[22rem] h-[22rem] rounded-xl ">
-				<Search />
+			<div className="bg-white flex flex-col justify-center items-center md:w-[33rem] md:h-[38rem] w-[20rem] h-[35rem] rounded-xl ">
+				{/* since we are passing in a parameter to this
+					func the same parameter should be used here	*/}
+				<Search onSubmit={(city) => getData(city)} />
 				<Time />
-				<Button getWeather={() => setWeather} />
 				<div className="flex justify-center">
 					{!weather ? (
 						<h2 className="mt-5">{message}</h2>
@@ -54,6 +62,8 @@ export default function FetchWeather() {
 							temp={Math.floor(weather.main.temp)}
 							icon={weather.weather[0].icon}
 							description={weather.weather[0].description}
+							humidity={weather.main.humidity}
+							speed={weather.wind.speed}
 						/>
 					)}
 				</div>

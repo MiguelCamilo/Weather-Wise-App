@@ -1,14 +1,22 @@
 
 export default function Time() {
 
+    const date = new Date()
+    const month = date.toLocaleString('default', {month: 'long'})
+    const day = date.getDate()
+    const year = date.getFullYear()
+    const dayName = date.toLocaleDateString('default', { weekday: 'short' });
+    
+
     const showTime = () => {
-        const date = new Date()
-        return date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+        const currentTime = new Date()
+        return currentTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
     }
+
 
     return (
         <>
-            <p className="mb-5">{showTime()}</p>
+            <p className="mb-5 font-semibold bg-blue-300 p-3 rounded-lg text-white">{showTime()}, {dayName} {`${month} ${day}, ${year}`}</p>
         </>
     )
 }
