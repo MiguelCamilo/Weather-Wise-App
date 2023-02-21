@@ -7,12 +7,12 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { API } from "../../secrets";
 // images
-import clear from "../../../public/images/clear.webp";
-import cloudy from "../../../public/images/cloudy.webp";
-import haze from "../../../public/images/haze.webp"
-import rain from "../../../public/images/rain.webp"
-import snow from "../../../public/images/snow.webp"
-import stock from "../../../public/images/weather.webp"
+import clear from "/images/clear.webp";
+import cloudy from "/images/cloudy.webp";
+import haze from "/images/haze.webp"
+import rain from "/images/rain.webp"
+import snow from "/images/snow.webp"
+import stock from "/images/weather.webp"
 
 import "./fetchweather.css";
 
@@ -97,7 +97,7 @@ export default function FetchWeather() {
 
 	return (
 		<div
-			className="bg-[#f4f5f6] min-h-screen flex flex-col items-center justify-center bg-img"
+			className="bg-[#7fb8f1] min-h-screen flex flex-col items-center justify-center bg-img"
 			style={{
 				backgroundImage,
 				transitionDuration: "1.3s",
@@ -107,7 +107,7 @@ export default function FetchWeather() {
 			}}
 		>
 			{/* weather card bg */}
-			<div className="bg-white opacity-90 flex flex-col justify-center items-center md:w-[33rem] md:h-[43rem] w-[20rem] h-[45rem] rounded-xl ">
+			<div className="bg-white opacity-80 flex flex-col justify-center items-center md:w-[33rem] md:h-[43rem] w-[20rem] h-[45rem] rounded-xl ">
 				<Header />
 				{/* since we are passing in a parameter to this
 					func the same parameter should be used here	*/}
