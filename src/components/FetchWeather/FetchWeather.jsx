@@ -1,16 +1,27 @@
+import { useState, useEffect } from "react";
+// components
 import Search from "../Input/Search";
 import Time from "../Time/Time";
 import FetchWeatherItems from "./FetchWeatherItems";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import { useState, useEffect } from "react";
 import { API } from "../../secrets";
+// images
+import clear from "../../../public/images/clear.webp";
+import cloudy from "../../../public/images/cloudy.webp";
+import haze from "../../../public/images/haze.webp"
+import rain from "../../../public/images/rain.webp"
+import snow from "../../../public/images/snow.webp"
+import stock from "../../../public/images/weather.webp"
+
+import "./fetchweather.css";
 
 export default function FetchWeather() {
 	const [weather, setWeather] = useState();
 	const [message, setMessage] = useState(`☀️  ⛈️  ☔️  🌨️ 🌤️ ❄️`);
 	const [cityName, setCityName] = useState();
-
+	const [backgroundImage, setBackgroundImage] = useState("");
+	
 	const API_KEY = API.api;
 
 	// this will get the data from
@@ -37,27 +48,66 @@ export default function FetchWeather() {
 		</svg>
 	);
 
+	// fetch data
 	useEffect(() => {
 		setTimeout(() => {
 			if (cityName) {
 				setMessage(image);
+
 				fetch(url)
 					.then((res) => {
-						if (res.status === 404) { // if city name does not match data base then setMessage
-							setMessage(`404: Hmmm that city couldn't be found🤔`)
-							return
+						if (res.status === 404) {
+							// if city name does not match data base then setMessage
+
+							setMessage(`Hmmm that city couldn't be found🤔`);
+							return;
 						}
-						return res.json()
+
+						return res.json();
 					})
-					.then(setWeather)
+					.then((data) => {
+						setWeather(data);
+						// if (data.weather && data.weather.length > 0) {
+							switch (data.weather[0].main) {
+								case "Clear":
+									setBackgroundImage(`url(${clear})`);
+									break;
+								case "Clouds":
+									setBackgroundImage(`url(${cloudy})`);
+									break;
+								case "Rain":
+									setBackgroundImage(`url(${rain})`);
+									break;
+								case "Haze":
+									setBackgroundImage(`url(${haze})`);
+									break;
+								case "Snow":
+									setBackgroundImage(`url(${snow})`);
+									break;
+								default:
+									setBackgroundImage(`url(${stock})`);
+									break;
+							}
+						// }
+					})
 					.catch((err) => console.error(`Error: ${err}`));
 			}
-		},1000);
+		}, 1000);
 	}, [cityName]);
 
 	return (
-		<div className="bg-[#e3e9f0] min-h-screen flex flex-col items-center justify-center">
-			<div className="bg-white flex flex-col justify-center items-center md:w-[33rem] md:h-[43rem] w-[20rem] h-[45rem] rounded-xl ">
+		<div
+			className="bg-[#f4f5f6] min-h-screen flex flex-col items-center justify-center bg-img"
+			style={{
+				backgroundImage,
+				transitionDuration: "1.3s",
+				transitionTimingFunction: "cubic-bezier(0.97, 0.15, 0.82, 0.75)",
+				transitionDelay: "0.15s",
+				scrollBehavior: "smooth",
+			}}
+		>
+			{/* weather card bg */}
+			<div className="bg-white opacity-90 flex flex-col justify-center items-center md:w-[33rem] md:h-[43rem] w-[20rem] h-[45rem] rounded-xl ">
 				<Header />
 				{/* since we are passing in a parameter to this
 					func the same parameter should be used here	*/}

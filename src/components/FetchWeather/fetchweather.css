@@ -1,0 +1,7 @@
+.weather-sunny {
+	background-image: url("/public/images/sunny.webp");
+}
+
+.weather-cloudy {
+	background-image: url("/public/images/cloudy.webp");
+}

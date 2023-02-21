@@ -1,12 +1,6 @@
-export default function FetchWeatherItems({
-	main,
-	temp,
-	icon,
-	description,
-	city,
-	humidity,
-	speed
-}) {
+
+
+export default function FetchWeatherItems({main,temp,icon,description,city,humidity,speed }) {
 	return (
 		<>
 			<section className="container mx-auto flex flex-col items-center content-center justify-center">
